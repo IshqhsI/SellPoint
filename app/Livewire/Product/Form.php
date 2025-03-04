@@ -22,12 +22,16 @@ class Form extends Component
         $this->name = $product->name;
         $this->price = $product->price;
         $this->category_id = $product->category_id;
-        $this->description = json_decode($product->description, true);
+        $this->description = $product->description;
     }
 
     public function render()
     {
         $this->categories = Category::all();
+
+        if ($this->description !== []) {
+            $this->description = json_decode($this->description);
+        }
 
         return view('livewire.product.form', [
             'categories' => $this->categories,
