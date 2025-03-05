@@ -50,7 +50,7 @@
                                 <a wire:navigate href="{{ route('admin.categories.edit', $category->id) }}"
                                     class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a>
 
-                                <button type="submit" onclick="return confirm('Are You Sure ?')"
+                                <button type="button" wire:confirm="Are You Sure ?"
                                     class="text-red-600 hover:text-red-900" wire:click="delete({{ $category->id }})">Delete</button>
                             </td>
                         </tr>
