@@ -14,7 +14,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'products',
-        'total_price',
+        'total',
         'status',
         'payment_method',
         'user_id',
@@ -34,34 +34,27 @@ class Transaction extends Model
     protected function products(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => json_decode($value),
+            get: fn ($value) => json_decode($value, true),
             set: fn ($value) => json_encode($value),
         );
     }
 
-    // schema products
-    // {
-    //     "type": "array",
-    //     "items": {
-    //         "type": "object",
-    //         "properties": {
-    //             "id": {
-    //                 "type": "integer"
-    //             },
-    //             "name": {
-    //                 "type": "string"
-    //             },
-    //             "price": {
-    //                 "type": "integer"
-    //             },
-    //             "quantity": {
-    //                 "type": "integer"
-    //             },
-    //             "subtotal": {
-    //                 "type": "integer"
-    //             },
-    //         }
-    //     }
-    // }
+    protected function totalQuantity(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value){
+
+                $products = is_string($this->products) ? json_decode($this->products, true) : $this->products;
+
+                if (!is_array($products)) {
+                    $products = [];
+                }
+
+                $totalQty = collect($products)->sum('quantity');
+
+                return $totalQty;
+            }
+        );
+    }
 
 }
