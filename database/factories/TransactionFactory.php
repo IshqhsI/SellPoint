@@ -20,15 +20,17 @@ class TransactionFactory extends Factory
             'products' => [
                 [
                     'id' => 1,
+                    'name' => fake()->text(5),
                     'quantity' => 2,
                     'price' => 5000,
-                    'total' => 10000
+                    'subtotal' => 10000
                 ],
                 [
                     'id' => 2,
+                    'name' => fake()->text(5),
                     'quantity' => 1,
                     'price' => 10000,
-                    'total' => 10000
+                    'subtotal' => 10000
                 ]
             ],
             'total' => 15000,
