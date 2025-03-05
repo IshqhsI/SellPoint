@@ -24,6 +24,10 @@
                         {{ __('Products') }}
                     </x-nav-link>
 
+                    <x-nav-link wire:navigate href="{{ route('admin.transactions.index') }}" :active="request()->routeIs('admin.transactions.*')">
+                        {{ __('Transactions') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -158,6 +162,10 @@
 
             <x-responsive-nav-link wire:navigate href="{{ route('admin.products.index') }}" :active="request()->routeIs('admin.products.*')">
                 {{ __('Products') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link wire:navigate href="{{ route('admin.transactions.index') }}" :active="request()->routeIs('admin.transactions.*')">
+                {{ __('Transactions') }}
             </x-responsive-nav-link>
 
         </div>
