@@ -86,7 +86,7 @@
                             <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                 {{-- <a wire:navigate href="{{ route('admin.transactions.edit', $transaction->id) }}"
                                     class="text-indigo-600 hover:text-indigo-900 mx-2">Edit</a> --}}
-                                {{-- <a wire:navigate href="{{ route('admin.transactions.show', $transaction->id) }}" class="text-indigo-600 hover:text-indigo-900 mx-2">Detail</a> --}}
+                                <a wire:navigate href="{{ route('admin.transactions.show', $transaction->id) }}" class="text-indigo-600 hover:text-indigo-900 mx-2">Detail</a>
                                 <button type="button" class="text-red-600 hover:text-red-900"
                                     wire:click="delete({{ $transaction->id }})"
                                     wire:confirm="Are You Sure ?">Delete</button>

@@ -38,7 +38,7 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        return view('admin.transactions.show', compact('transaction'));
     }
 
     /**
