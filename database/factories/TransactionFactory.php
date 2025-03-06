@@ -17,7 +17,7 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'products' => [
+            'products' => json_encode([
                 [
                     'id' => 1,
                     'name' => fake()->text(5),
@@ -32,7 +32,7 @@ class TransactionFactory extends Factory
                     'price' => 10000,
                     'subtotal' => 10000
                 ]
-            ],
+            ]),
             'total' => 15000,
             'status' => 'success',
             'payment_method' => 'cash',
