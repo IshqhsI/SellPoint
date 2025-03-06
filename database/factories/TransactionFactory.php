@@ -33,7 +33,7 @@ class TransactionFactory extends Factory
                     'subtotal' => 10000
                 ]
             ]),
-            'total' => 15000,
+            'total' => 20000,
             'status' => 'success',
             'payment_method' => 'cash',
             'user_id' => 1
