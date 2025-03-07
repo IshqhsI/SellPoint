@@ -14,6 +14,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -23,5 +24,7 @@ Route::middleware([
         Route::resource('/products', ProductController::class);
         Route::resource('/transactions', TransactionController::class);
     });
+
+    Route::get('/', fn()=> view('front.index'));
 
 });
