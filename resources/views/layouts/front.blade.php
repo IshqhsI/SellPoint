@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -24,11 +25,6 @@
 
         .product-card:hover {
             transform: translateY(-4px);
-            transition: all 0.3s ease;
-        }
-
-        .category-pill:hover {
-            background-color: rgba(59, 130, 246, 0.1);
             transition: all 0.3s ease;
         }
 
@@ -58,8 +54,8 @@
 
             <div class="flex items-center space-x-6">
                 <div class="text-right mr-4">
-                    <p class="text-sm">Toko Barokah Jaya</p>
-                    <p class="text-xs text-blue-100">Jl. Merdeka No. 123</p>
+                    <p class="text-sm">Toko ELIN</p>
+                    <p class="text-xs text-blue-100">Jl. Pendreh</p>
                 </div>
 
                 <div class="flex items-center space-x-3">
@@ -74,7 +70,7 @@
                     <div class="flex items-center space-x-2">
                         <div
                             class="bg-white text-blue-800 rounded-full h-8 w-8 flex items-center justify-center font-bold shadow-md">
-                            A
+                            Z
                         </div>
                         <div class="md:block hidden">
                             <p class="text-sm font-medium">Ahmad</p>
