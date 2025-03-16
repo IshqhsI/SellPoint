@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
+use App\Livewire\Home\Front;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,6 @@ Route::middleware([
         Route::resource('/transactions', TransactionController::class);
     });
 
-    Route::get('/', fn()=> view('front.index'));
+    Route::get('/', Front::class)->name('home');
 
 });
