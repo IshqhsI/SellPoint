@@ -64,4 +64,9 @@ class TransactionController extends Controller
     {
         //
     }
+
+    public function detail(Transaction $transaction)
+    {
+        return view('transactions.detail', compact('transaction'));
+    }
 }
