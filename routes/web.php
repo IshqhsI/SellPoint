@@ -27,5 +27,6 @@ Route::middleware([
     });
 
     Route::get('/', Front::class)->name('home');
+    Route::get('/transaction/{transaction}', [TransactionController::class, 'detail'])->name('transactions.detail');
 
 });
