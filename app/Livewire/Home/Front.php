@@ -5,6 +5,8 @@ namespace App\Livewire\Home;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class Front extends Component
@@ -14,12 +16,7 @@ class Front extends Component
 
     public function mount(){
 
-        // $this->products = Cache::remember('products', 60, function () {
-        //     return Product::all();
-        // });
-
-        $this->products = Product::all();
-
+        $this->getAllProducts();
 
         $this->categories = Cache::remember('categories', 60, function () {
             return Category::withCount('products')
@@ -96,6 +93,9 @@ class Front extends Component
     public function emptyCart()
     {
         $this->cart = [];
+        $this->total = 0;
+        $this->change = 0;
+        $this->cash = 0;
         session()->forget('cart');
         Cache::forget('products');
     }
@@ -113,6 +113,25 @@ class Front extends Component
         } else {
             $this->change = 0;
         }
+    }
+
+    public function processPayment(){
+
+        // Insert to Transaction
+        $transaction = Transaction::create([
+            'products' => json_encode($this->cart),
+            'total' => $this->total,
+            'status' => 'paid',
+            'payment_method' => 'cash',
+            'user_id' => Auth::user()->id
+        ]);
+
+        // Clear Cart
+        $this->emptyCart();
+        $this->cash = 0;
+        $this->change = 0;
+
+        return redirect()->route('transactions.detail', $transaction->id)->with('success', 'Transaction created successfully.');
     }
 
 }

@@ -54,7 +54,7 @@
                         <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md overflow-hidden">
                             <div class="h-40 bg-gray-100 relative overflow-hidden flex items-center justify-center p-4">
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                    class="w-auto object-contain">
+                                    class="w-auto object-contain" loading="lazy">
                                 {{-- <span
                                         class="absolute top-2 right-2 bg-yellow-400 text-xs font-bold text-yellow-800 py-1 px-2 rounded">Terlaris</span> --}}
                             </div>
@@ -104,7 +104,7 @@
             @if (count($cart) > 0)
                 @foreach ($cart as $item)
                     <div class="bg-white rounded-lg p-3 border border-gray-100 shadow-sm flex gap-3">
-                        <img src="{{ asset('storage/' . $item['image']) }}" alt="Indomie" class="h-16 w-16 my-auto object-cover rounded bg-gray-100">
+                        <img src="{{ asset('storage/' . $item['image']) }}" alt="" loading="lazy" class="h-16 w-16 my-auto object-cover rounded bg-gray-100">
                         <div class="flex-1">
                             <div class="flex justify-between">
                                 <h3 class="font-medium text-gray-800">{{ $item['name'] }}</h3>
@@ -175,7 +175,7 @@
                 </div>
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-600">Cash</span>
-                    <input type="text" accept="number"
+                    <input type="text"
                         class="text-right text-blue-600 font-bold text-lg rounded border-0 border-gray-300 focus:outline-none focus:border-transparent"
                         wire:model="cash" wire:keyup="calculateChange" placeholder="0" autofocus>
                 </div>
@@ -208,7 +208,7 @@
             </div>
 
             <button
-                class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg shadow-md transition duration-300 flex items-center justify-center">
+                class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg shadow-md transition duration-300 flex items-center justify-center" wire:click="processPayment">
                 <i class="fas fa-check-circle mr-2"></i>
                 Proses Pembayaran
             </button>
