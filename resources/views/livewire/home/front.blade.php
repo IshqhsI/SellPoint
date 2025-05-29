@@ -8,7 +8,7 @@
             class="p-4 border-b border-gray-100 flex flex-col-reverse md:flex-row justify-between items-center space-y-4 gap-4">
 
             <div class="relative w-full md:w-96 mb-0">
-                <input type="text" placeholder="Cari produk (nama/kode/barcode)..."
+                <input type="text" placeholder="Cari produk (nama/kode/barcode)..." autofocus
                     class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" wire:model="search" wire:keydown="getBySearch">
                 <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
             </div>
@@ -102,25 +102,25 @@
         <!-- Cart Items -->
         <div class="flex-1 overflow-y-auto p-3 space-y-3">
             @if (count($cart) > 0)
-                @foreach ($cart as $item)
+                @foreach ($cart as $index => $item)
                     <div class="bg-white rounded-lg p-3 border border-gray-100 shadow-sm flex gap-3">
                         <img src="{{ asset('storage/' . $item['image']) }}" alt="" loading="lazy" class="h-16 w-16 my-auto object-cover rounded bg-gray-100">
                         <div class="flex-1">
                             <div class="flex justify-between">
                                 <h3 class="font-medium text-gray-800">{{ $item['name'] }}</h3>
-                                <button class="text-gray-400 hover:text-red-500">
-                                    <i class="fas fa-times"></i>
+                                <button class="text-gray-400 hover:text-red-500" >
+                                    <i class="fas fa-times" wire:click="removeFromCart({{ $index }})"></i>
                                 </button>
                             </div>
-                            <div class="text-gray-600 text-sm">SKU: MKIN001</div>
+                            {{-- <div class="text-gray-600 text-sm">SKU: MKIN001</div> --}}
                             <div class="flex justify-between items-center mt-2">
                                 <div class="text-blue-600 font-bold">{{ 'Rp. ' . number_format($item['price']) }}</div>
                                 <div class="flex items-center border border-slate-300 rounded-lg overflow-hidden">
                                     <button
-                                        class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-s-md text-gray-50">-</button>
+                                        class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-s-md text-gray-50" wire:click="decrementQuantity({{ $index }})">-</button>
                                     <span class="w-10 py-1 text-center outline-none">{{ $item['quantity'] }}</span>
                                     <button
-                                        class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-e-md  text-gray-50">+</button>
+                                        class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-e-md  text-gray-50" wire:click="incrementQuantity({{ $index }})">+</button>
                                 </div>
                             </div>
                         </div>
@@ -137,20 +137,6 @@
             @endif
 
         </div>
-
-        <!-- Customer & Discount -->
-        {{-- <div class="p-4 border-t border-gray-200 space-y-3">
-                <div class="flex space-x-2">
-                    <div class="flex-1">
-                        <input type="text" placeholder="Nama Pelanggan"
-                            class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div class="flex-1">
-                        <input type="text" placeholder="Kode Diskon"
-                            class="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                </div>
-            </div> --}}
 
         <!-- Cart Summary -->
         <div class="p-4 py-2 bg-gray-50 border-t border-gray-200">
@@ -175,9 +161,9 @@
                 </div>
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-600">Cash</span>
-                    <input type="text"
+                    <input type="text" id="cash"
                         class="text-right text-blue-600 font-bold text-lg rounded border-0 border-gray-300 focus:outline-none focus:border-transparent"
-                        wire:model="cash" wire:keyup="calculateChange" placeholder="0" autofocus>
+                        wire:model="cash" wire:keyup="calculateChange" placeholder="0">
                 </div>
                 <div class="flex justify-between text-sm">
                     <span class="text-gray-600">Change</span>
@@ -186,15 +172,26 @@
             </div>
         </div>
 
+        <div class="grid grid-cols-4 gap-2 mt-3 p-2">
+            <button wire:click="addCash(1000)" class="bg-blue-100 text-xs rounded py-1">1K</button>
+            <button wire:click="addCash(2000)" class="bg-blue-100 text-xs rounded py-1">2K</button>
+            <button wire:click="addCash(5000)" class="bg-blue-100 text-xs rounded py-1">5K</button>
+            <button wire:click="addCash(10000)" class="bg-blue-100 text-xs rounded py-1">10K</button>
+            <button wire:click="addCash(50000)" class="bg-blue-100 text-xs rounded py-1">50K</button>
+            <button wire:click="addCash(100000)" class="bg-blue-100 text-xs rounded py-1">100K</button>
+            <button wire:click="addCash({{ $total }})" class="bg-green-100 text-xs rounded py-1">Pas</button>
+            <button wire:click="clearCash" class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold px-3 py-1 rounded">C</button>
+        </div>
+
         <!-- Payment Methods -->
         <div class="p-4 border-t border-gray-200">
             <h3 class="font-medium text-gray-700 mb-3">Metode Pembayaran</h3>
             <div class="grid grid-cols-3 gap-2 mb-4">
-                <button
+                <label for="cash"
                     class="payment-method-button border border-blue-500 bg-blue-50 py-2 rounded-lg text-center text-blue-600 font-medium">
                     <i class="fas fa-money-bill-wave text-blue-500 mr-1"></i>
                     Tunai
-                </button>
+                </label>
                 <button
                     class="payment-method-button border border-gray-200 py-2 rounded-lg text-center text-gray-700 font-medium">
                     <i class="fas fa-credit-card text-gray-500 mr-1"></i>
@@ -230,12 +227,37 @@
                     toast: true,
                     icon: 'success',
                     // title: '{{ session('success') }}',
-                    text: 'Added to cart successfully',
+                    text: message.message,
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
-                    // backgroundColor: '#28a745',
-                    // titleColor: '#fff',
+                })
+            });
+
+            Livewire.on('cart-empty', message => {
+                Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    icon: 'success',
+                    // title: '{{ session('success') }}',
+                    text: message.message,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                })
+            });
+
+            Livewire.on('payment-failed', message => {
+                console.log(message);
+                Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    icon: 'error',
+                    // title: '{{ session('success') }}',
+                    text: message.message,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
                 })
             });
         });
