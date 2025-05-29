@@ -25,7 +25,7 @@ class Front extends Component
         });
 
         $this->total = 0;
-        $this->cash = 0;
+        $this->cash = '';
         $this->change = 0;
 
     }
@@ -63,6 +63,12 @@ class Front extends Component
     {
         $this->cart[$index]['quantity']++;
         $this->cart[$index]['subtotal'] = $this->cart[$index]['price'] * $this->cart[$index]['quantity'];
+        $this->total = collect($this->cart)->sum('subtotal');
+
+        $this->calculateChange();
+
+        $this->dispatch('cart-updated', message: "{$this->cart[$index]['name']} berhasil ditambahkan ke keranjang!");
+
     }
 
     private function addNewCartItem(Product $product)
@@ -92,12 +98,18 @@ class Front extends Component
 
     public function emptyCart()
     {
+        if(empty($this->cart)){
+            return;
+        }
+
         $this->cart = [];
         $this->total = 0;
         $this->change = 0;
-        $this->cash = 0;
+        $this->cash = '';
         session()->forget('cart');
         Cache::forget('products');
+
+        $this->dispatch('cart-empty', message: "Keranjang berhasil dikosongkan!");
     }
 
     public function removeFromCart($index)
@@ -105,17 +117,60 @@ class Front extends Component
         unset($this->cart[$index]);
         $this->cart = array_values($this->cart);
         $this->total = collect($this->cart)->sum('subtotal');
+
+        $this->calculateChange();
     }
 
-    public function calculateChange(){
-        if($this->cash > $this->total){
-            $this->change = $this->cash - $this->total;
+    public function decrementQuantity($index)
+    {
+        if ($this->cart[$index]['quantity'] > 1) {
+            $this->cart[$index]['quantity']--;
+            $this->cart[$index]['subtotal'] = $this->cart[$index]['price'] * $this->cart[$index]['quantity'];
+            $this->total = collect($this->cart)->sum('subtotal');
         } else {
-            $this->change = 0;
+            $this->removeFromCart($index);
         }
+
+        $this->calculateChange();
+
     }
+
+    public function incrementQuantity($index)
+    {
+        $this->updateCartItem($index);
+    }
+
+    public function addCash($amount)
+    {
+        $this->cash = (int) preg_replace('/[^0-9]/', '', $this->cash);
+        $this->cash += $amount;
+
+        $this->calculateChange();
+    }
+
+    public function clearCash()
+    {
+        $this->cash = 0;
+        $this->change = 0;
+    }
+
+    public function calculateChange()
+    {
+        $cleanCash = preg_replace('/[^0-9]/', '', $this->cash);
+        $cashValue = (int) $cleanCash;
+        $this->cash = $cashValue;
+        $this->change = $cashValue >= $this->total
+            ? $cashValue - $this->total
+            : 0;
+    }
+
 
     public function processPayment(){
+
+        if($this->cash < $this->total){
+            $this->dispatch('payment-failed', message: "Uang anda kurang!");
+            return;
+        }
 
         // Insert to Transaction
         $transaction = Transaction::create([
@@ -128,7 +183,7 @@ class Front extends Component
 
         // Clear Cart
         $this->emptyCart();
-        $this->cash = 0;
+        $this->cash = '';
         $this->change = 0;
 
         return redirect()->route('transactions.detail', $transaction->id)->with('success', 'Transaction created successfully.');
