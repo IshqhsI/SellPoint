@@ -53,30 +53,58 @@
             </div>
 
             <div class="flex items-center space-x-6">
+
+                <div class="hidden md:block">
+                    <a href="{{ route('dashboard') }}" class="text-sm font-semibold">
+                        <i class="fas fa-dashboard px-1"></i> Dashboard
+                    </a>
+                </div>
+
+                @php
+                    $storeName = 'ELIN';
+                    $address = 'Jl. Pendreh, Muara Teweh';
+                @endphp
+
                 <div class="text-right mr-4">
-                    <p class="text-sm">Toko ELIN</p>
-                    <p class="text-xs text-blue-100">Jl. Pendreh</p>
+                    <p class="text-sm">Toko {{ $storeName }}</p>
+                    <p class="text-xs text-blue-100">{{ $address }}</p>
                 </div>
 
                 <div class="flex items-center space-x-3">
-                    <div class="relative">
+                    {{-- <div class="relative">
                         <button class="text-white focus:outline-none">
                             <i class="fas fa-bell text-lg"></i>
                             <span
                                 class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">3</span>
                         </button>
+                    </div> --}}
+
+                    <div x-data="{ open: false }" class="relative">
+                        <!-- Tombol Avatar -->
+                        <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                            <div
+                                class="bg-white text-blue-800 rounded-full h-8 w-8 flex items-center justify-center font-bold shadow-md">
+                                {{ substr(Auth::user()->name, 0, 1) }}
+                            </div>
+                            <div class="md:block hidden">
+                                <p class="text-sm font-medium">{{ Auth::user()->name }}</p>
+                            </div>
+                        </button>
+
+                        <!-- Dropdown -->
+                        <div x-show="open" @click.away="open = false"
+                            class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50 py-2 border text-sm">
+                            <a href="{{ route('dashboard') }}"
+                                class="block md:hidden px-4 py-2 hover:bg-blue-100 text-gray-800">Dashboard</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-blue-100 text-gray-800">Profile</a>
+                            <form method="POST" action="{{ route('logout') }}" class="hover:bg-blue-100 cursor-pointer">
+                                @csrf
+                                <button type="submit"
+                                    class="block px-4 py-2 hover:bg-blue-100 text-gray-800 cursor-pointer">Logout</button>
+                            </form>
+                        </div>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <div
-                            class="bg-white text-blue-800 rounded-full h-8 w-8 flex items-center justify-center font-bold shadow-md">
-                            Z
-                        </div>
-                        <div class="md:block hidden">
-                            <p class="text-sm font-medium">Ahmad</p>
-                            <p class="text-xs text-blue-100">Kasir</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
