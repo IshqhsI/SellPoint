@@ -9,7 +9,8 @@
 
             <div class="relative w-full md:w-96 mb-0">
                 <input type="text" placeholder="Cari produk (nama/kode/barcode)..." autofocus
-                    class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" wire:model="search" wire:keydown="getBySearch">
+                    class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    wire:model="search" wire:keydown="getBySearch">
                 <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
             </div>
 
@@ -85,7 +86,7 @@
     </div>
 
     <!-- Right Panel - Cart -->
-    <div class="w-full lg:w-1/3 flex flex-col bg-white border-l border-gray-200">
+    <div class="w-full lg:w-1/3 flex flex-col bg-white border-l border-gray-200" id="cartSection">
 
         <!-- Cart Header -->
         <div class="bg-gray-50 p-4 border-b border-gray-200 flex justify-between">
@@ -100,15 +101,16 @@
         </div>
 
         <!-- Cart Items -->
-        <div class="flex-1 overflow-y-auto p-3 space-y-3">
+        <div class="flex-1 overflow-y-auto p-3 space-y-3 max-h-[calc(100vh-300px)]">
             @if (count($cart) > 0)
                 @foreach ($cart as $index => $item)
                     <div class="bg-white rounded-lg p-3 border border-gray-100 shadow-sm flex gap-3">
-                        <img src="{{ asset('storage/' . $item['image']) }}" alt="" loading="lazy" class="h-16 w-16 my-auto object-cover rounded bg-gray-100">
+                        <img src="{{ asset('storage/' . $item['image']) }}" alt="" loading="lazy"
+                            class="h-16 w-16 my-auto object-cover rounded bg-gray-100">
                         <div class="flex-1">
                             <div class="flex justify-between">
                                 <h3 class="font-medium text-gray-800">{{ $item['name'] }}</h3>
-                                <button class="text-gray-400 hover:text-red-500" >
+                                <button class="text-gray-400 hover:text-red-500">
                                     <i class="fas fa-times" wire:click="removeFromCart({{ $index }})"></i>
                                 </button>
                             </div>
@@ -116,11 +118,11 @@
                             <div class="flex justify-between items-center mt-2">
                                 <div class="text-blue-600 font-bold">{{ 'Rp. ' . number_format($item['price']) }}</div>
                                 <div class="flex items-center border border-slate-300 rounded-lg overflow-hidden">
-                                    <button
-                                        class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-s-md text-gray-50" wire:click="decrementQuantity({{ $index }})">-</button>
+                                    <button class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-s-md text-gray-50"
+                                        wire:click="decrementQuantity({{ $index }})">-</button>
                                     <span class="w-10 py-1 text-center outline-none">{{ $item['quantity'] }}</span>
-                                    <button
-                                        class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-e-md  text-gray-50" wire:click="incrementQuantity({{ $index }})">+</button>
+                                    <button class="px-2 py-1 bg-blue-500 hover:bg-blue-500 rounded-e-md  text-gray-50"
+                                        wire:click="incrementQuantity({{ $index }})">+</button>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +182,8 @@
             <button wire:click="addCash(50000)" class="bg-blue-100 text-xs rounded py-1">50K</button>
             <button wire:click="addCash(100000)" class="bg-blue-100 text-xs rounded py-1">100K</button>
             <button wire:click="addCash({{ $total }})" class="bg-green-100 text-xs rounded py-1">Pas</button>
-            <button wire:click="clearCash" class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold px-3 py-1 rounded">C</button>
+            <button wire:click="clearCash"
+                class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold px-3 py-1 rounded">C</button>
         </div>
 
         <!-- Payment Methods -->
@@ -205,7 +208,8 @@
             </div>
 
             <button
-                class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg shadow-md transition duration-300 flex items-center justify-center" wire:click="processPayment">
+                class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg shadow-md transition duration-300 flex items-center justify-center"
+                wire:click="processPayment">
                 <i class="fas fa-check-circle mr-2"></i>
                 Proses Pembayaran
             </button>
@@ -218,6 +222,12 @@
             </div>
         </div>
     </div>
+
+    {{-- Button to cart --}}
+    <button onclick="document.getElementById('cartSection').scrollIntoView({ behavior: 'smooth' })"
+        class="fixed md:hidden bottom-4 right-4 bg-blue-600 text-white p-3 rounded shadow-lg hover:bg-blue-700 transition z-50">
+        <i class="fas fa-cart-shopping"></i>
+    </button>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
