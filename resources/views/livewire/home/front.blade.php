@@ -174,16 +174,16 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-4 gap-2 mt-3 p-2">
-            <button wire:click="addCash(1000)" class="bg-blue-100 text-xs rounded py-1">1K</button>
-            <button wire:click="addCash(2000)" class="bg-blue-100 text-xs rounded py-1">2K</button>
-            <button wire:click="addCash(5000)" class="bg-blue-100 text-xs rounded py-1">5K</button>
-            <button wire:click="addCash(10000)" class="bg-blue-100 text-xs rounded py-1">10K</button>
-            <button wire:click="addCash(50000)" class="bg-blue-100 text-xs rounded py-1">50K</button>
-            <button wire:click="addCash(100000)" class="bg-blue-100 text-xs rounded py-1">100K</button>
-            <button wire:click="addCash({{ $total }})" class="bg-green-100 text-xs rounded py-1">Pas</button>
+        <div class="grid grid-cols-4 gap-2 p-2">
+            <button wire:click="addCash(1000)" class="bg-blue-100 hover:bg-blue-300 text-xs rounded cursor-pointer py-1">1K</button>
+            <button wire:click="addCash(2000)" class="bg-blue-100 hover:bg-blue-300 text-xs rounded cursor-pointer py-1">2K</button>
+            <button wire:click="addCash(5000)" class="bg-blue-100 hover:bg-blue-300 text-xs rounded cursor-pointer py-1">5K</button>
+            <button wire:click="addCash(10000)" class="bg-blue-100 hover:bg-blue-300 text-xs rounded cursor-pointer py-1">10K</button>
+            <button wire:click="addCash(50000)" class="bg-blue-100 hover:bg-blue-300 text-xs rounded cursor-pointer py-1">50K</button>
+            <button wire:click="addCash(100000)" class="bg-blue-100 hover:bg-blue-300 text-xs rounded cursor-pointer py-1">100K</button>
+            <button wire:click="addCash({{ $total }})" class="bg-green-100 hover:bg-green-300 text-xs rounded cursor-pointer py-1">Pas</button>
             <button wire:click="clearCash"
-                class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold px-3 py-1 rounded">C</button>
+                class="bg-red-100 hover:bg-red-200 text-red-700 text-xs font-semibold px-3 py-1 rounded cursor-pointer">C</button>
         </div>
 
         <!-- Payment Methods -->

@@ -143,7 +143,7 @@
                     </path>
                 </svg>
                 <div>
-                    <h1 class="font-bold text-xl">SellPoint</h1>
+                    <a href="{{ route('home') }}" class="font-bold text-xl">SellPoint</a>
                 </div>
             </div>
 
