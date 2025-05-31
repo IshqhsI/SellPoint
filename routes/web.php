@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
 use App\Livewire\Home\Front;
+use App\Livewire\Invoice\Index as Invoice;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +27,6 @@ Route::middleware([
     });
 
     Route::get('/', Front::class)->name('home');
-    Route::get('/transaction/{transaction}', [TransactionController::class, 'detail'])->name('transactions.detail');
+    Route::get('/transaction/{transaction}', Invoice::class)->name('invoice');
 
 });
