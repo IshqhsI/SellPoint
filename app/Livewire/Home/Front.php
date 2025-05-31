@@ -189,4 +189,9 @@ class Front extends Component
         return redirect()->route('invoice', $transaction->id)->with('success', 'Transaction created successfully.');
     }
 
+    public function printLastReceipt(){
+        $transaction = Transaction::latest()->first();
+        return redirect()->route('invoice', $transaction->id);
+    }
+
 }
