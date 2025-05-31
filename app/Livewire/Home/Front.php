@@ -186,7 +186,7 @@ class Front extends Component
         $this->cash = '';
         $this->change = 0;
 
-        return redirect()->route('transactions.detail', $transaction->id)->with('success', 'Transaction created successfully.');
+        return redirect()->route('invoice', $transaction->id)->with('success', 'Transaction created successfully.');
     }
 
 }
