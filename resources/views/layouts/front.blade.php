@@ -32,6 +32,101 @@
             border-color: rgba(59, 130, 246, 0.5);
             transition: all 0.2s ease;
         }
+
+        @media print {
+            @page {
+                size: 58mm auto;
+                margin: 0;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 58mm;
+                background: white;
+                font-family: monospace;
+                font-size: 10px;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            .receipt {
+                width: 100%;
+                max-width: 46mm;
+                margin: 0 auto;
+                padding: 5px;
+            }
+
+            .receipt h2 {
+                font-size: 10px;
+                margin: 0;
+                text-align: center;
+            }
+
+            .receipt .address,
+            .receipt .date,
+            .receipt p {
+                text-align: center;
+                margin: 2px 0;
+                font-size: 8px;
+            }
+
+            .line {
+                border-top: 1px dashed #000;
+                margin: 6px 0;
+            }
+
+            .items {
+                width: 100%;
+                margin-top: 4px;
+                border-collapse: collapse;
+            }
+
+            .items td {
+                padding: 2px 0;
+                font-size: 8px;
+            }
+
+            .items td.name {
+                width: 50%;
+            }
+
+            .items td.qty {
+                width: 10%;
+                text-align: right;
+            }
+
+            .items td.price {
+                width: 40%;
+                text-align: right;
+            }
+
+            .receipt .total {
+                text-align: right;
+                font-weight: bold;
+                margin-top: 4px;
+            }
+
+            .receipt .footer {
+                margin-top: 12px;
+                font-size: 7px;
+                text-align: center;
+            }
+
+            a,
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* @media print {
+            .receipt a {
+                display: none;
+            }
+        } */
     </style>
 </head>
 
@@ -97,7 +192,8 @@
                             <a href="{{ route('dashboard') }}"
                                 class="block md:hidden px-4 py-2 hover:bg-blue-100 text-gray-800">Dashboard</a>
                             <a href="#" class="block px-4 py-2 hover:bg-blue-100 text-gray-800">Profile</a>
-                            <form method="POST" action="{{ route('logout') }}" class="hover:bg-blue-100 cursor-pointer">
+                            <form method="POST" action="{{ route('logout') }}"
+                                class="hover:bg-blue-100 cursor-pointer">
                                 @csrf
                                 <button type="submit"
                                     class="block px-4 py-2 hover:bg-blue-100 text-gray-800 cursor-pointer">Logout</button>
