@@ -130,7 +130,7 @@
     </style>
 </head>
 
-<body class="bg-gray-50 h-screen flex flex-col overflow-hidden">
+<body class="bg-gray-50 h-screen flex flex-col">
 
     <!-- Header -->
     <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
